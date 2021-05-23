@@ -2,6 +2,7 @@ package ru.gb.pugacheva.lesson2;
 
 import java.util.Arrays;
 
+
 public class DynamicArray<E extends Comparable<? super E>> {
 
     private static final int DEFAULT_CAPACITY = 8;
@@ -104,6 +105,46 @@ public class DynamicArray<E extends Comparable<? super E>> {
         }
         sb.append(" ]");
         return sb.toString();
+    }
+
+    public void sortBubble(){
+        for (int i = 0; i < size-1; i++) {
+            for (int j = 0; j < size-1-i; j++) {
+                if(data[j].compareTo(data[j+1])>0){
+                    changeElements(j, j+1);
+                }
+            }
+        }
+    }
+    public void changeElements(int index1, int index2){
+        E temp = data[index1];
+        data[index1]=data[index2];
+        data[index2] = temp;
+    }
+
+
+    public void sortSelect(){
+        for (int i = 0; i < size-1; i++) {
+            int minIndex=i;
+            for (int j = i+1; j < size; j++) {
+                if(data[j].compareTo(data[minIndex])<0){
+                    minIndex=j;
+                }
+            }
+            changeElements(i, minIndex);
+        }
+    }
+
+    public void sortInsert(){
+        for (int i = 1; i < size; i++) {
+            E temp = data[i];
+            int in = i;
+            while (in > 0 && data[in-1].compareTo(temp)>=0){
+                data[in]=data[in-1];
+                in--;
+            }
+            data[in]=temp;
+        }
     }
 
 }
