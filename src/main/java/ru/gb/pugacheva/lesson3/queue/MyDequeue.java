@@ -1,6 +1,6 @@
 package ru.gb.pugacheva.lesson3.queue;
 
-public interface Dequeue <E> {
+public interface MyDequeue<E> {
 
     boolean insertLeft (E value);
     boolean insertRight (E value);

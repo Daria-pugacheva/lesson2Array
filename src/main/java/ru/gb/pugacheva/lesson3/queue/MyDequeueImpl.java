@@ -1,6 +1,6 @@
 package ru.gb.pugacheva.lesson3.queue;
 
-public class DequeueImpl<E> implements Dequeue<E> {
+public class MyDequeueImpl<E> implements MyDequeue<E> {
 
     private final E[] data;
     private int size;
@@ -12,7 +12,7 @@ public class DequeueImpl<E> implements Dequeue<E> {
     private int head;
 
     @SuppressWarnings("unchecked")
-    public DequeueImpl(int maxSize) {
+    public MyDequeueImpl(int maxSize) {
         this.data = (E[]) new Object[maxSize];
         this.head = HEAD_DEFAULT;
         this.tail = TAIL_DEFAULT;

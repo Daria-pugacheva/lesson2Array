@@ -1,6 +1,6 @@
 package ru.gb.pugacheva.lesson3;
 
-import ru.gb.pugacheva.lesson3.queue.DequeueImpl;
+import ru.gb.pugacheva.lesson3.queue.MyDequeueImpl;
 import ru.gb.pugacheva.lesson3.queue.PriorityQueue;
 import ru.gb.pugacheva.lesson3.queue.Queue;
 import ru.gb.pugacheva.lesson3.queue.QueueImpl;
@@ -60,10 +60,10 @@ public class HomeworkMainApp {
         System.out.println("About reverse method:");
         System.out.println(reverse("abcd"));
 
-        // Задание3. Проверка работоспособности Dequeue
+        // Задание3. Проверка работоспособности MyDequeue
         System.out.println("________________");
-        System.out.println("About Dequeue:");
-        DequeueImpl <Integer> dequeue = new DequeueImpl<>(6);
+        System.out.println("About MyDequeue:");
+        MyDequeueImpl<Integer> dequeue = new MyDequeueImpl<>(6);
         dequeue.insertRight(10);
         dequeue.insertRight(20);
         dequeue.insertRight(30);

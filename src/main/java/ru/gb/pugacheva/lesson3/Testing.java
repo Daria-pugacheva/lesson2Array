@@ -1,8 +1,6 @@
 package ru.gb.pugacheva.lesson3;
 
-import ru.gb.pugacheva.lesson3.queue.PriorityQueue;
-import ru.gb.pugacheva.lesson3.queue.Queue;
-import ru.gb.pugacheva.lesson3.queue.QueueImpl;
+import ru.gb.pugacheva.lesson3.queue.*;
 import ru.gb.pugacheva.lesson3.stack.Stack;
 import ru.gb.pugacheva.lesson3.stack.StackImpl;
 
@@ -10,9 +8,11 @@ public class Testing {
 
 
     public static void main(String[] args) {
-       testStack();
-       testDueue();
-       testPriorotyDueue();
+      // testStack();
+       //testQueue();
+      // testPriorotyDueue();
+       testDequeImpl();
+
 
     }
 
@@ -35,8 +35,30 @@ public class Testing {
 
 
     }
+    private static void testDequeImpl() {
+        System.out.println("________________");
+        System.out.println("About DequeImpl:");
+        Deque<Integer> dequeue = new DequeImpl<>(6);
+        dequeue.insertRight(10);
+        dequeue.insertRight(20);
+        dequeue.insertRight(30);
+        dequeue.insertLeft(3);
+        dequeue.insertLeft(2);
+        dequeue.insertLeft(1);
+        dequeue.insertLeft(0);
 
-    private static void testDueue() {
+        dequeue.removeLeft();
+        dequeue.removeRight();
+
+        displayLeftToRight(dequeue);
+
+    }
+    private static <E > void displayLeftToRight (Deque <E> deque){
+        while (!deque.isEmpty()){
+            System.out.println(deque.removeLeft());
+        }
+    }
+    private static void testQueue() {
         Queue <Integer> queue = new QueueImpl<>(5);
         System.out.println(queue.insert(3));
         System.out.println(queue.insert(5));
@@ -87,6 +109,7 @@ public class Testing {
         }
         return false;
     }
+
 
 
 

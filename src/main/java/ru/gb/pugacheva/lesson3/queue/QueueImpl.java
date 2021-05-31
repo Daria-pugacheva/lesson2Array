@@ -2,14 +2,14 @@ package ru.gb.pugacheva.lesson3.queue;
 
 public class QueueImpl <E> implements Queue <E>{
 
-    private final E [] data;
-    private int size;
+    protected final E [] data;
+    protected int size;
 
-    private static final int HEAD_DEFAULT = 0;
-    private static final int TAIL_DEFAULT = -1;
+    protected static final int HEAD_DEFAULT = 0;
+    protected static final int TAIL_DEFAULT = -1;
 
-    private int tail;
-    private int head;
+    protected int tail;
+    protected int head;
 
     @SuppressWarnings("unchecked")
     public QueueImpl(int maxSize) {
