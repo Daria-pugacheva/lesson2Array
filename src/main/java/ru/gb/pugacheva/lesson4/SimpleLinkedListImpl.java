@@ -1,6 +1,8 @@
 package ru.gb.pugacheva.lesson4;
 
-public class SimpleLinkedListImpl <E> implements LinkedList <E>{
+import java.util.Iterator;
+
+public class SimpleLinkedListImpl <E> implements Iterable<E>, LinkedList <E>{
 
     protected int size;
 
@@ -10,12 +12,6 @@ public class SimpleLinkedListImpl <E> implements LinkedList <E>{
     @Override
     public void insertFirst(E value) {
         firstElement=new Node<>(value, firstElement);
-//        //второй вариант кода, который еще раз упростили (итоговая строка выше)
-//        Node <E> node = new Node<>(value, firstElement);
-////        // изначально развернутый вариант кода, который мы сократили
-////        Node <E> node = new Node<>(value, null);
-////        node.next=firstElement;
-//        firstElement=node;
         size++;
 
     }
@@ -111,5 +107,10 @@ public class SimpleLinkedListImpl <E> implements LinkedList <E>{
         }
         sb.append(" ]");
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new SimpleIterator<>(this);
     }
 }

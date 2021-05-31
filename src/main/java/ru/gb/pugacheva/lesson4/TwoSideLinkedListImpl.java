@@ -2,9 +2,9 @@ package ru.gb.pugacheva.lesson4;
 
 public class TwoSideLinkedListImpl <E>extends SimpleLinkedListImpl <E>implements TwoSideLinkedList <E>{
 
-    private Node <E> lastElement;
+    protected Node <E> lastElement;
 
-    @Override
+    @Override //+
     public void insertLast(E value) {
         Node <E> newNode = new Node<>(value,null);
         if(isEmpty()){
@@ -16,7 +16,7 @@ public class TwoSideLinkedListImpl <E>extends SimpleLinkedListImpl <E>implements
         size++;
     }
 
-    @Override
+    @Override //+
     public void insertFirst(E value) {
         super.insertFirst(value);
         if(size==1){

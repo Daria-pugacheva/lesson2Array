@@ -21,10 +21,17 @@ public interface LinkedList <E>{
     class Node <E>{
         E item;
         Node <E> next;
+        Node <E> previous;
 
         public Node(E item, Node<E> next) {
             this.item = item;
             this.next = next;
+        }
+
+        public Node(E item, Node<E> next, Node<E> previous) {  //второй вариант конструктора
+            this.item = item;
+            this.next = next;
+            this.previous=previous;
         }
     }
 
