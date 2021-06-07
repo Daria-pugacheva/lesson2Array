@@ -20,6 +20,17 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
 
     private Node<E> root;
 
+    private final int maxLevelNumber;
+
+    private int currentLevel;
+
+    public TreeImpl(int maxLevelNumber) {  //в конструкторе задаем максимальное число уровней дерева
+        this.maxLevelNumber=maxLevelNumber;
+    }
+
+    public Node<E> getRoot() {
+        return root;
+    }
 
     @Override
     public boolean add(E value) {
@@ -44,8 +55,9 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
 
         Node<E> node = new Node<>(value);
         NodeAndParent nodeAndParent = doFind(value);
+      //  System.out.println(currentLevel); // ВРЕМЕННО ДЛЯ ПРОВЕРКИ!!!!!!!!!!!
 
-        if (nodeAndParent.current != null) {
+        if (nodeAndParent.current != null || currentLevel>maxLevelNumber) { //добавлена проверка про уровень
             return false;
         }
         Node<E> previous = nodeAndParent.parent;
@@ -86,6 +98,7 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
     private NodeAndParent doFind(E value) {
         Node<E> current = root;
         Node<E> previous = null;
+        currentLevel=1; //когда появляется root, то это самый первый уровень
 
         while (current != null) {
             if (current.getValue().equals(value)) {
@@ -98,6 +111,7 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
             } else {
                 current = current.getRightChild();
             }
+            currentLevel++; //по мере следования по веткам вниз, уровень растет
         }
 
         return new NodeAndParent(null, previous);
@@ -276,6 +290,7 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
             }
             System.out.println("................................................................");
         }
+
 
     }
 

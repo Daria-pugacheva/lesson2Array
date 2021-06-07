@@ -3,7 +3,7 @@ package ru.gb.pugacheva.lesson6;
 public class Test6 {
 
     public static void main(String[] args) {
-        Tree <Integer> tree = new TreeImpl<>();
+        Tree <Integer> tree = new TreeImpl<>(100);
         tree.add(60);
         tree.add(50);
         tree.add(66);
@@ -23,9 +23,12 @@ public class Test6 {
 //        tree.traverse(Tree.TraverseMode.IN_ORDER);
 
         tree.display();
+
+
+
 //        tree.remove(55);
-       // tree.remove(42);
-        tree.remove(40);
-        tree.display();
+//        tree.remove(42);
+//        tree.remove(40);
+//        tree.display();
     }
 }
