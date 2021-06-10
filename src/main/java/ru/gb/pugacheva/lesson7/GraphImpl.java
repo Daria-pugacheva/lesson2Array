@@ -1,14 +1,21 @@
 package ru.gb.pugacheva.lesson7;
 
+
 import java.util.*;
 
 
 // реализуем ненаправленный связанный и невзвешенный граф. Используем матрицу смежности
-public class GraphImpl implements Graph{
+public class GraphImpl implements Graph {
 
-    private final List <Vertex> vertexList;
+    private final List<Vertex> vertexList;
 
-    private final boolean [] [] adjMat; // adjective Matrix
+    private final boolean[][] adjMat; // adjective Matrix
+
+    private ArrayList<String> allLabelsInBfsQueue = new ArrayList<>();
+
+    public ArrayList<String> getAllLabelsInBfsQueue() {
+        return allLabelsInBfsQueue;
+    }
 
     public GraphImpl(int maxVertexCount) {
         this.vertexList = new ArrayList<>();
@@ -31,23 +38,23 @@ public class GraphImpl implements Graph{
         return result;
     }
 
-    private boolean addEdge (String startLabel, String endLabel){
+    private boolean addEdge(String startLabel, String endLabel) {
         int startIndex = indexOf(startLabel);
         int endIndex = indexOf(endLabel);
 
-        if (startIndex ==-1 || endIndex ==-1){
+        if (startIndex == -1 || endIndex == -1) {
             return false;
         }
-        adjMat [startIndex][endIndex] = true;
-        adjMat [endIndex][startIndex] = true;
+        adjMat[startIndex][endIndex] = true;
+        adjMat[endIndex][startIndex] = true;
         return true;
     }
 
 
-    private int indexOf(String label){
+    private int indexOf(String label) {
         for (int i = 0; i < vertexList.size(); i++) {
             Vertex vertex = vertexList.get(i);
-            if(vertex.getLabel().equals(label)){
+            if (vertex.getLabel().equals(label)) {
                 return i;
             }
         }
@@ -65,7 +72,7 @@ public class GraphImpl implements Graph{
         for (int i = 0; i < getSize(); i++) {
             System.out.print(vertexList.get(i));
             for (int j = 0; j < getSize(); j++) {
-                if(adjMat[i][j]){
+                if (adjMat[i][j]) {
                     System.out.print(" -> " + vertexList.get(j));
                 }
             }
@@ -76,18 +83,18 @@ public class GraphImpl implements Graph{
     @Override
     public void dfs(String startLabel) {
         int startIndex = indexOf(startLabel);
-        if(startIndex==-1){
+        if (startIndex == -1) {
             throw new IllegalArgumentException("invalid startLabel: " + startLabel);
         }
-        Stack <Vertex> stack = new Stack<>();
+        Stack<Vertex> stack = new Stack<>();
         Vertex vertex = vertexList.get(startIndex);
 
         visitVertex(stack, vertex);
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             vertex = getNearUnvisitedVertex(stack.peek());
-            if(vertex != null){
-                visitVertex(stack,vertex);
-            }else{
+            if (vertex != null) {
+                visitVertex(stack, vertex);
+            } else {
                 stack.pop();
             }
         }
@@ -95,7 +102,7 @@ public class GraphImpl implements Graph{
     }
 
     private void resetVertexState() {
-        for (Vertex vertex: vertexList){
+        for (Vertex vertex : vertexList) {
             vertex.setVisited(false);
         }
     }
@@ -103,7 +110,7 @@ public class GraphImpl implements Graph{
     private Vertex getNearUnvisitedVertex(Vertex current) {
         int currentIndex = vertexList.indexOf(current);
         for (int i = 0; i < getSize(); i++) {
-            if(adjMat[currentIndex][i] && !vertexList.get(i).isVisited()){
+            if (adjMat[currentIndex][i] && !vertexList.get(i).isVisited()) {
                 return vertexList.get(i);
             }
         }
@@ -113,36 +120,82 @@ public class GraphImpl implements Graph{
     private void visitVertex(Stack<Vertex> stack, Vertex vertex) {
         System.out.println(vertex.getLabel());
         stack.push(vertex);
-        vertex.setVisited (true);
+        vertex.setVisited(true);
 
     }
 
     private void visitVertex(Queue<Vertex> queue, Vertex vertex) {
         System.out.println(vertex.getLabel());
         queue.add(vertex);
-        vertex.setVisited (true);
-
+        allLabelsInBfsQueue.add(vertex.getLabel());
+        vertex.setVisited(true);
     }
 
     @Override
     public void bfs(String startLabel) {
         int startIndex = indexOf(startLabel);
-        if(startIndex==-1){
+        if (startIndex == -1) {
             throw new IllegalArgumentException("invalid startLabel: " + startLabel);
         }
         Queue<Vertex> queue = new LinkedList<>();
         Vertex vertex = vertexList.get(startIndex);
 
         visitVertex(queue, vertex);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             vertex = getNearUnvisitedVertex(queue.peek());
-            if(vertex != null){
-                visitVertex(queue,vertex);
-            }else{
+            if (vertex != null) {
+                visitVertex(queue, vertex);
+            } else {
                 queue.remove();
             }
         }
         resetVertexState();
-
     }
+
+    public void findShortWayByBfs(String startLabel, String finishLabel) {
+        int startIndex = indexOf(startLabel);
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("invalid startLabel: " + startLabel);
+        }
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex vertex = vertexList.get(startIndex);
+
+        visitVertex(queue, vertex);
+        while (!queue.isEmpty()) {
+            vertex = getNearUnvisitedVertex(queue.peek());
+
+            if (vertex != null) {
+                visitVertex(queue, vertex);
+            } else {
+                queue.remove();
+            }
+        }
+        resetVertexState();
+    }
+
+    public int queueLengthBeforeFirstRemove(String startLabel, String finishLabel) {
+
+        int startIndex = indexOf(startLabel);
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("invalid startLabel: " + startLabel);
+        }
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex vertex = vertexList.get(startIndex);
+
+        visitVertex(queue, vertex);
+
+        while (!queue.isEmpty()) {
+            vertex = getNearUnvisitedVertex(queue.peek());
+
+            if (vertex != null) {
+                visitVertex(queue, vertex);
+            } else {
+                queue.remove();
+                return queue.size();
+            }
+        }
+        resetVertexState();
+        return 0;
+    }
+
 }
